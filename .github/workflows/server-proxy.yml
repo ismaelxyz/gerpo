@@ -22,7 +22,7 @@ jobs:
           skip-save-cache: true
           args: --timeout 5m
   
-  tests:
+  securego:
     runs-on: ubuntu-latest
     # env:
     #   GO111MODULE: on
@@ -32,5 +32,4 @@ jobs:
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
-          args: ./...
-        working-directory: ./server-proxy
+          args: ./server-proxy/...
