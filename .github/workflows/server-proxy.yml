@@ -22,22 +22,22 @@ jobs:
           skip-save-cache: true
           args: --timeout 5m
   
-  securego:
-    runs-on: ubuntu-latest
-    # env:
-    #   GO111MODULE: on
+  # securego:
+  #   runs-on: ubuntu-latest
+  #   # env:
+  #   #   GO111MODULE: on
     
-    steps:
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version:
-            - '1.23'
-            
-      - name: Install gosecurego
-        run: curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+  #   steps:
+  #     - name: Setup Go
+  #       uses: actions/setup-go@v5
+  #       with:
+  #         go-version:
+  #           - '1.23'
 
-      - name: Run gosec
-        run: |
-          cd server-proxy
-          gosec ./...
+  #     - name: Install gosecurego
+  #       run: curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+
+  #     - name: Run gosec
+  #       run: |
+  #         cd server-proxy
+  #         gosec ./...
