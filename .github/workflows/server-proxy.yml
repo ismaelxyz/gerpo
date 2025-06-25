@@ -21,3 +21,16 @@ jobs:
           working-directory: ./server-proxy
           skip-save-cache: true
           args: --timeout 5m
+  
+  tests:
+    runs-on: ubuntu-latest
+    # env:
+    #   GO111MODULE: on
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: ./...
+        working-directory: ./server-proxy
