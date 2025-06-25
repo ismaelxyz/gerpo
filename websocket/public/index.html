@@ -5,7 +5,7 @@
      <meta charset="UTF-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Univer Proxy</title>
+     <title>Gerpo Server</title>
      <style>
          body {
              font-family: Arial, sans-serif;
@@ -40,10 +40,10 @@
 </head>
 
 <body>
-     <h1>Gerpo Proxy</h1>
+     <h1>Gerpo Server</h1>
      <div id="messages"></div>
      <script>
-         const ws = new WebSocket("ws://localhost:8488/ws");
+         const ws = new WebSocket("ws://localhost:8448/ws");
          const messagesDiv = document.getElementById("messages");
 
          // Triggered when the connection is opened

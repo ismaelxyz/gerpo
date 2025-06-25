@@ -1,17 +1,18 @@
 package main
 
 import (
-	"fmt"
-
+	"log"
 	"net/url"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
-func getProxyWebSocket(c *gin.Context) {
+func getProxyWebSocket(c *gin.Context, host string) {
 	urlTarget := url.URL{
 		Scheme: "ws",
-		Host:   "localhost:8448",
+		Host:   host,
 		Path:   "/ws",
 	}
 
@@ -24,12 +25,25 @@ func homePage(c *gin.Context) {
 }
 
 func main() {
-	fmt.Println("Proxy Server!")
+	if err := godotenv.Load(); err != nil {
+		log.Println("Error loading .env file", err.Error())
+	}
 
-	bindAddress := "localhost:8488"
+	proxy := os.Getenv("PROXY")
+	if proxy == "" {
+		log.Fatal("PROXY environment variable is not set")
+	}
+
+	bindAddress := os.Getenv("SERVER_URL")
+	if bindAddress == "" {
+		log.Fatal("SERVER_URL environment variable is not set")
+	}
+
 	r := gin.Default()
 
-	r.GET("/ws", getProxyWebSocket)
+	r.GET("/ws", func(c *gin.Context) {
+		getProxyWebSocket(c, proxy)
+	})
 	r.GET("/", homePage)
 	r.Run(bindAddress)
 }

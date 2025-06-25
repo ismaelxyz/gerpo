@@ -1,14 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
-
-	"net/http"
-
 	"github.com/gorilla/websocket"
+	"github.com/joho/godotenv"
 )
 
 var upgrader = websocket.Upgrader{
@@ -25,17 +24,18 @@ func ws(c *gin.Context) {
 		log.Print("upgrade:", err)
 		return
 	}
+
 	defer ws.Close()
+
 	for {
-		//read data from ws
 		mt, message, err := ws.ReadMessage()
 		if err != nil {
 			log.Println("read:", err)
 			break
 		}
+
 		log.Printf("recv: %s", message)
 
-		//write ws data
 		err = ws.WriteMessage(mt, message)
 		if err != nil {
 			log.Println("write:", err)
@@ -49,9 +49,16 @@ func homePage(c *gin.Context) {
 }
 
 func main() {
-	fmt.Println("Websocket Server!")
+	// Load environment variables from .env file
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
 
-	bindAddress := "localhost:8448"
+	bindAddress := os.Getenv("SERVER_URL")
+	if bindAddress == "" {
+		log.Fatal("SERVER_URL is not set in the environment")
+	}
+
 	r := gin.Default()
 	r.GET("/ws", ws)
 	r.GET("/", homePage)

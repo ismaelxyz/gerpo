@@ -1,11 +1,13 @@
 module github.com/ismaelxyz/go-server
 
-go 1.22.1
+go 1.23.0
+
 toolchain go1.24.1
 
 require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/gorilla/websocket v1.5.1
+	github.com/joho/godotenv v1.5.1
 )
 
 require (
