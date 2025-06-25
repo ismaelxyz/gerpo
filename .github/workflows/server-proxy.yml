@@ -41,6 +41,11 @@ jobs:
              echo "❌ Error installing gosecurego"
             exit 1
           fi
+      - name: See directories
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Contents of the current directory:"
+          ls 
 
       - name: Run gosec
         run: |
