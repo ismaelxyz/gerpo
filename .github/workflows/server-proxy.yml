@@ -33,8 +33,10 @@ jobs:
         with:
           go-version:
             - '1.23'
+            
       - name: Install gosecurego
-        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+        run: curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+
       - name: Run gosec
         run: |
           cd server-proxy
