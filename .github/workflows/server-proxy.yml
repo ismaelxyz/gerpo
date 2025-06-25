@@ -15,23 +15,7 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: stable
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v8
-        with:
-          working-directory: ./server-proxy
-          skip-save-cache: true
-          args: --timeout 5m
-  
-  securego:
-    name: server-proxy-securego
-    runs-on: ubuntu-latest
-    # env:
-    #   GO111MODULE: on
-    
-    steps:
-      - name: Setup Go
-        uses: actions/setup-go@v5
-
+      
       - name: Install gosecurego
         run: |
           set -e
@@ -41,11 +25,20 @@ jobs:
              echo "❌ Error installing gosecurego"
             exit 1
           fi
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v8
+        with:
+          working-directory: ./server-proxy
+          skip-save-cache: true
+          args: --timeout 5m
+      
       - name: See directories
         run: |
           echo "Current directory: $(pwd)"
           echo "Contents of the current directory:"
-          ls 
+          ls ../
+          ls ./
 
       - name: Run gosec
         run: |
