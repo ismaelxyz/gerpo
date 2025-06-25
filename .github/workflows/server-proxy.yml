@@ -32,8 +32,15 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v5
 
-  #     - name: Install gosecurego
-  #       run: curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+      - name: Install gosecurego
+        run: |
+          set -e
+          if curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin; then
+            echo "✅ gosecurego installed successfully"
+          else
+            echo "❌ Error installing gosecurego"
+            exit 1
+          fi
 
   #     - name: Run gosec
   #       run: |
