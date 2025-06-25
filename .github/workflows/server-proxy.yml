@@ -33,13 +33,6 @@ jobs:
           skip-save-cache: true
           args: --timeout 5m
       
-      - name: See directories
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Contents of the current directory:"
-          ls ../
-          ls ./
-
       - name: Run gosec
         run: |
           cd server-proxy
