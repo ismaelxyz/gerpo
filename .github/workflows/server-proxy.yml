@@ -36,9 +36,9 @@ jobs:
         run: |
           set -e
           if curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin; then
-            echo "✅ gosecurego installed successfully"
+             echo "✅ gosecurego installed successfully $(gosec --version)"
           else
-            echo "❌ Error installing gosecurego"
+             echo "❌ Error installing gosecurego"
             exit 1
           fi
 
