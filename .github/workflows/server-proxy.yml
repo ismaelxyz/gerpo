@@ -23,6 +23,7 @@ jobs:
           args: --timeout 5m
   
   securego:
+    name: server-proxy-securego
     runs-on: ubuntu-latest
     # env:
     #   GO111MODULE: on
