@@ -45,5 +45,7 @@ func main() {
 		getProxyWebSocket(c, proxy)
 	})
 	r.GET("/", homePage)
-	r.Run(bindAddress)
+	if err := r.Run(bindAddress); err != nil {
+		panic(err)
+	}
 }
