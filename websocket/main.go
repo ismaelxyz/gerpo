@@ -25,7 +25,11 @@ func ws(c *gin.Context) {
 		return
 	}
 
-	defer ws.Close()
+	defer func() {
+		if err := ws.Close(); err != nil {
+			log.Println("close:", err)
+		}
+	}()
 
 	for {
 		mt, message, err := ws.ReadMessage()
@@ -62,5 +66,9 @@ func main() {
 	r := gin.Default()
 	r.GET("/ws", ws)
 	r.GET("/", homePage)
-	r.Run(bindAddress)
+
+	err := r.Run(bindAddress)
+	if err != nil {
+		log.Fatalf("Failed to start server: %v", err)
+	}
 }
