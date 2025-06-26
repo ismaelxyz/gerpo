@@ -15,21 +15,25 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: stable
+      
+      - name: Install gosecurego
+        run: |
+          set -e
+          if curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin; then
+             echo "✅ gosecurego installed successfully $(gosec --version)"
+          else
+             echo "❌ Error installing gosecurego"
+            exit 1
+          fi
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v8
         with:
           working-directory: ./websocket
           skip-save-cache: true
           args: --timeout 5m
-          
-  # securego:
-  #   runs-on: ubuntu-latest
-  #   # env:
-  #   #   GO111MODULE: on
-  #   steps:
-  #     - name: Checkout Source
-  #       uses: actions/checkout@v3
-  #     - name: Run Gosec Security Scanner
-  #       uses: securego/gosec@master
-  #       with:
-  #         args: ./websocket/...
+      
+      - name: Run gosec
+        run: |
+          cd websocket
+          gosec ./...
